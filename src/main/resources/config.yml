@@ -1,0 +1,22 @@
+global_pack:
+  url: ""
+  hash: ""
+
+geyser_players: false
+resend_on_reload: true
+
+special_servers:
+  survival:
+    bycommand: false
+    url: ""
+    hash: ""
+
+messages:
+  prefix: "&7[&aCustomPackVelocity&7]"
+  config_reloaded: "&eThe config has been reloaded."
+  no_permission: "&cYou do not have permission to do that."
+  command_usage: "&cUsage: /cpv reload, /cpv version, /cpv send <player>"
+  send_player_not_found: "&cPlayer &b{player} &cnot found."
+  url_empty: "&cThe URL for the global pack is empty."
+  pack_sent: "&eThe global pack was sent to &b{player} &eon reason &b{reason}"
+  server_own_pack: "&eSending &b{player} &eto &b{server} &ewith their own pack."
