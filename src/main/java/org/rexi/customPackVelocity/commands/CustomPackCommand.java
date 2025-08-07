@@ -1,4 +1,4 @@
-package org.rexi.customPackVelocity;
+package org.rexi.customPackVelocity.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
@@ -6,6 +6,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.rexi.customPackVelocity.CustomPackVelocity;
 import org.rexi.customPackVelocity.utils.ConfigManager;
 
 import java.util.List;

@@ -24,28 +24,21 @@ public class TexturePackListener {
     }
 
     @Subscribe
-    public void onPlayerLogin(LoginEvent event) {
+    public void onServerConnected(ServerConnectedEvent event) {
         Player player = event.getPlayer();
+
         if (player.getUsername().contains(".") && configManager.getString("geyser_players").equals("true")) {
             return;
         }
-
-        server.getScheduler().buildTask(plugin, () -> {
-            plugin.sendGlobalPackToServer(player, "login");
-        }).delay(1, TimeUnit.SECONDS).schedule();
-    }
-
-    @Subscribe
-    public void onServerConnected(ServerConnectedEvent event) {
-        Player player = event.getPlayer();
 
         String previousServer = event.getPreviousServer()
                 .map(srv -> srv.getServerInfo().getName())
                 .orElse("N/A");
 
-        if (previousServer.equalsIgnoreCase("N/A")) return;
-
-        if (player.getUsername().contains(".") && configManager.getString("geyser_players").equals("true")) {
+        if (previousServer.equalsIgnoreCase("N/A")) {
+            server.getScheduler().buildTask(plugin, () -> {
+                plugin.sendGlobalPackToServer(player, "login");
+            }).delay(1, TimeUnit.SECONDS).schedule();
             return;
         }
 

@@ -9,15 +9,14 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
+import org.rexi.customPackVelocity.commands.CustomPackCommand;
 import org.rexi.customPackVelocity.listeners.TexturePackListener;
 import org.rexi.customPackVelocity.utils.ConfigManager;
 import org.slf4j.Logger;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 
-@Plugin(id = "custompackvelocity", name = "CustomPackVelocity", version = BuildConstants.VERSION)
+@Plugin(id = "custompackvelocity", name = "CustomPackVelocity", version = BuildConstants.VERSION, authors = "Rexi666")
 public class CustomPackVelocity {
 
     private final ProxyServer server;
