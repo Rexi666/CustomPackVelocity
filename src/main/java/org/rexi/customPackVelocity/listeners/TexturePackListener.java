@@ -9,6 +9,8 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import org.rexi.customPackVelocity.CustomPackVelocity;
 import org.rexi.customPackVelocity.utils.ConfigManager;
 
+import java.util.concurrent.TimeUnit;
+
 public class TexturePackListener {
 
     private final CustomPackVelocity plugin;
@@ -27,7 +29,10 @@ public class TexturePackListener {
         if (player.getUsername().contains(".") && configManager.getString("geyser_players").equals("true")) {
             return;
         }
-        plugin.sendGlobalPackToServer(player, "login");
+
+        server.getScheduler().buildTask(plugin, () -> {
+            plugin.sendGlobalPackToServer(player, "login");
+        }).delay(1, TimeUnit.SECONDS).schedule();
     }
 
     @Subscribe
@@ -48,16 +53,16 @@ public class TexturePackListener {
 
         String serverName = newServer.getServerInfo().getName();
         // Aquí puedes decidir si el servidor tiene un pack propio:
-        if (plugin.isSpecialServer(serverName)) {
+        if (plugin.isSpecialServer(serverName) && plugin.shouldApplyOnJoin(serverName)) {
             // No mandar el global, dejar que el servidor lo maneje
             if (plugin.shouldApplyOnJoin(serverName)) {
                 server.getConsoleCommandSource().sendMessage(configManager.deserialize(configManager.getMessagePrefix("server_own_pack").replace("{player}", player.getUsername()).replace("{server}", serverName)));
-            } else {
-                plugin.sendGlobalPackToServer(player, newServer.getServerInfo().getName());
             }
         } else if (plugin.isSpecialServer(previousServer)) {
             // Si venía de un servidor especial, reestablece el pack global
-            plugin.sendGlobalPackToServer(player, newServer.getServerInfo().getName());
+            server.getScheduler().buildTask(plugin, () -> {
+                plugin.sendGlobalPackToServer(player, newServer.getServerInfo().getName());
+            }).delay(1, TimeUnit.SECONDS).schedule();
         }
     }
 }
