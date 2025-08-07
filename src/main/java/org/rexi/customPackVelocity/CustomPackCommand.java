@@ -45,7 +45,7 @@ public class CustomPackCommand implements SimpleCommand {
 
                 if (configManager.getBoolean("resend_on_reload")) {
                     for (Player player : server.getAllPlayers()) {
-                        if (player.getUsername().contains(".") && configManager.getString("geyser_players").equals("true")) {
+                        if (player.getUsername().contains(".") && configManager.getBoolean("geyser_players")) {
                             continue; // No enviar pack a jugadores de Geyser
                         }
                         plugin.sendGlobalPackToServer(player, "reload");
@@ -75,9 +75,8 @@ public class CustomPackCommand implements SimpleCommand {
                 plugin.sendGlobalPackToServer(target, "forcesend");
             }
 
-            default -> {
-                source.sendMessage(configManager.deserialize(configManager.getMessagePrefix("command_usage")));
-            }
+            default -> source.sendMessage(configManager.deserialize(configManager.getMessagePrefix("command_usage")));
+
         }
     }
 

@@ -65,9 +65,7 @@ public class ConfigManager {
                 }
 
                 if (node.node("special_servers").empty()) {
-                    node.node("special_servers", "survival", "bycommand").set(false);
-                    node.node("special_servers", "survival", "url").set("");
-                    node.node("special_servers", "survival", "hash").set("");
+                    node.node("special_servers", "survival", "apply_on_join").set(true);
                 }
 
                 if (node.node("messages", "prefix").empty()) {
@@ -115,9 +113,7 @@ public class ConfigManager {
             node.node("geyser_players").set(false);
             node.node("resend_on_reload").set(true);
 
-            node.node("special_servers", "survival", "bycommand").set(false);
-            node.node("special_servers", "survival", "url").set("");
-            node.node("special_servers", "survival", "hash").set("");
+            node.node("special_servers", "survival", "apply_on_join").set(true);
 
             node.node("messages", "prefix").set("&7[&aCustomPackVelocity&7]");
             node.node("messages", "config_reloaded").set("&eThe config has been reloaded.");
@@ -195,6 +191,19 @@ public class ConfigManager {
         } catch (IOException e) {
             e.printStackTrace();
             return List.of();
+        }
+    }
+
+    public boolean contains(String key) {
+        try {
+            ConfigurationNode node = loader.load();
+            for (String part : key.split("\\.")) {
+                node = node.node(part);
+            }
+            return !node.virtual(); // Devuelve true si el nodo existe
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

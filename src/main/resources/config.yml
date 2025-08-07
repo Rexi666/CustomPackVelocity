@@ -7,9 +7,7 @@ resend_on_reload: true
 
 special_servers:
   survival:
-    bycommand: false
-    url: ""
-    hash: ""
+    apply_on_join: true
 
 messages:
   prefix: "&7[&aCustomPackVelocity&7]"

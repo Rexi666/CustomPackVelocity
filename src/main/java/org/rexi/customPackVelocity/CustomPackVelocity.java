@@ -59,6 +59,10 @@ public class CustomPackVelocity {
             server.getConsoleCommandSource().sendMessage(configManager.deserialize(configManager.getMessagePrefix("url_empty")));
             return;
         }
+        if (!hash.matches("^[a-fA-F0-9]{40}$")) {
+            logger.warn("Invalid SHA1 hash for resource pack.");
+            hash = "";
+        }
 
         // Crear el mensaje para enviarlo al servidor Paper
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -86,9 +90,13 @@ public class CustomPackVelocity {
     }
 
     public boolean isSpecialServer(String serverName) {
-        // Luego puedes cargar esto desde la config si lo necesitas
-        return serverName.equalsIgnoreCase("eventos") || serverName.equalsIgnoreCase("pvp");
+        return configManager.contains("special_servers." + serverName);
     }
+
+    public boolean shouldApplyOnJoin(String serverName) {
+        return configManager.getBoolean("special_servers." + serverName + ".apply_on_join");
+    }
+
 
     public String getVersion() {
         return BuildConstants.VERSION;

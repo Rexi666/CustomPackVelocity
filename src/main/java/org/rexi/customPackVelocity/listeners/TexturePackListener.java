@@ -50,9 +50,10 @@ public class TexturePackListener {
         // Aquí puedes decidir si el servidor tiene un pack propio:
         if (plugin.isSpecialServer(serverName)) {
             // No mandar el global, dejar que el servidor lo maneje
-            if (!configManager.getBoolean("special_servers."+serverName+".bycommand")) {
+            if (plugin.shouldApplyOnJoin(serverName)) {
                 server.getConsoleCommandSource().sendMessage(configManager.deserialize(configManager.getMessagePrefix("server_own_pack").replace("{player}", player.getUsername()).replace("{server}", serverName)));
-                return;
+            } else {
+                plugin.sendGlobalPackToServer(player, newServer.getServerInfo().getName());
             }
         } else if (plugin.isSpecialServer(previousServer)) {
             // Si venía de un servidor especial, reestablece el pack global
